@@ -2,7 +2,7 @@
   "name": "react-homework-template",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://BukshtunovichAN.github.io/react-router-hw/",
+  "homepage": "https://BukshtunovichAN/react-router-hw/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
