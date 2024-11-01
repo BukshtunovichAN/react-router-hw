@@ -1,7 +1,8 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Outlet } from "react-router-dom";
+
 
 const API_KEY = '3556469a3deea69b9ea3bf68fe390f35';
 
@@ -34,7 +35,10 @@ const Reviews = () => {
             </li>
           ))}
         </ul>
-      )}
+        )}
+        <Suspense fallback={<div>Loading subpage...</div>}>
+        <Outlet />
+      </Suspense>
         </div>
      
   

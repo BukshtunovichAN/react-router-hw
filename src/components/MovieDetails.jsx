@@ -1,8 +1,10 @@
 import React from 'react';
-import { useState, useEffect } from "react";
+import { useState, useEffect,Suspense } from "react";
 import axios from 'axios';
-import { useParams, useLocation, NavLink, Outlet } from "react-router-dom";
+import { useParams, useLocation, Outlet } from "react-router-dom";
 import { BackLink } from "../components/BackLink";
+import noPhotoImg from '../img/no-photo.png'
+import { Container, Poster, Info, Title,Score,Overview, Genres, AdditionalInfo, PosterContainer, InfoLink, InfoList   } from "./MovieDetails.styled";
 const API_KEY = '3556469a3deea69b9ea3bf68fe390f35';
 
 const MovieDetails = () => {
@@ -31,29 +33,36 @@ useEffect(() => {
   return (
     <div>
 
-         <BackLink to={backLinkHref}>Go back</BackLink>
+    <BackLink to={backLinkHref}>Go back</BackLink>
     
-      <h2>{data.title}</h2>
-      
+      <Container>
 
-      {data.backdrop_path && (
-        <img src={`https://image.tmdb.org/t/p/w500${data.backdrop_path}`} alt={data.title} width="200" />
-      )}
-      <p>User Score: {data.popularity }%</p>
-      <h3>Overview</h3>
+        <PosterContainer>
+             {data.poster_path ? 
+        <Poster src={`https://image.tmdb.org/t/p/w500${data.poster_path}`} alt={data.title} width="200" /> : <Poster src={noPhotoImg} alt="no-img" width="200"/>
+      }
+       </PosterContainer>
+        <Info>
+          <Title>{data.title}</Title>
+      <Score>User Score: {data.vote_average * 10}%</Score>
+      <Overview>Overview</Overview>
       <p>{data.overview}</p>
-      <h3>Genres</h3>
+      <Genres>Genres</Genres>
       <ul>
         {data.genres.map((genre) => (
           <li key={genre.id}>{genre.name}</li>
         ))}
       </ul>
-      <p>Additional information</p>
-      <nav>
-        <li><NavLink to="cast">Cast</NavLink></li>
-        <li><NavLink to="reviews">Reviews</NavLink></li>
-      </nav>
-      <Outlet />
+      </Info>
+      </Container>
+      <AdditionalInfo>Additional information:</AdditionalInfo>
+      <InfoList>
+        <li><InfoLink to="cast">Cast</InfoLink></li>
+        <li><InfoLink to="reviews">Reviews</InfoLink></li>
+      </InfoList>
+      <Suspense fallback={<div>Loading subpage...</div>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };
